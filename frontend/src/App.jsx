@@ -110,10 +110,6 @@ function DashboardOverview() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_20%,rgba(34,197,94,0.22),transparent_30%),radial-gradient(circle_at_15%_100%,rgba(37,99,235,0.35),transparent_42%)]" />
         <div className="relative grid gap-8 p-7 sm:p-9 lg:grid-cols-[1.3fr_0.7fr] lg:items-center">
           <div>
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-300/20 bg-emerald-300/10 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-emerald-200">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.9)]" />
-              Live campus command center
-            </div>
             <h1 className="max-w-2xl text-3xl font-black leading-[1.05] tracking-tight sm:text-5xl">
               Know what is happening on campus before you need to ask.
             </h1>
