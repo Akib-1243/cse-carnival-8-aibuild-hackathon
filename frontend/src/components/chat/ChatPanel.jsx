@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { sendChatMessage } from '../../api/client';
 import clsx from 'clsx';
-import { X, Sparkles, Send } from 'lucide-react';
+import { X, Minus, Sparkles, Send } from 'lucide-react';
 
 const SUGGESTIONS = [
     "When is my next class?",
@@ -10,14 +10,14 @@ const SUGGESTIONS = [
     "Latest campus announcements"
 ];
 
-export default function ChatPanel({ onClose }) {
+export default function ChatPanel({ onClose, onMinimize, isMinimized, initialPrompt = '' }) {
     const [messages, setMessages] = useState([
         {
             role: 'assistant',
             content: 'Hi! I am CampusOS AI. Ask me about classes, room reservations, deadlines, or campus notices.'
         }
     ]);
-    const [input, setInput] = useState('');
+    const [input, setInput] = useState(initialPrompt);
     const [isLoading, setIsLoading] = useState(false);
     const bottomRef = useRef();
 
@@ -59,7 +59,7 @@ export default function ChatPanel({ onClose }) {
     };
 
     return (
-        <div className="fixed bottom-24 right-6 w-96 h-[530px] glass rounded-3xl border border-white/40 shadow-2xl flex flex-col overflow-hidden z-30">
+        <div className={clsx('fixed bottom-24 right-6 w-96 h-[530px] glass rounded-3xl border border-white/40 shadow-2xl flex flex-col overflow-hidden z-30', isMinimized && 'hidden')}>
             {/* Header */}
             <div className="flex justify-between items-center p-4 border-b border-white/20 bg-white/40 backdrop-blur-md">
                 <div className="flex items-center gap-2">
@@ -74,9 +74,14 @@ export default function ChatPanel({ onClose }) {
                         </div>
                     </div>
                 </div>
-                <button onClick={onClose} className="p-1.5 rounded-xl hover:bg-gray-200/50 transition">
-                    <X className="h-4 w-4 text-gray-600" />
-                </button>
+                <div className="flex items-center gap-1">
+                    <button onClick={onMinimize} className="p-1.5 rounded-xl hover:bg-gray-200/50 transition" aria-label="Minimize chat" title="Minimize chat">
+                        <Minus className="h-4 w-4 text-gray-600" />
+                    </button>
+                    <button onClick={onClose} className="p-1.5 rounded-xl hover:bg-gray-200/50 transition" aria-label="Close chat and start a new session" title="Close chat and start a new session">
+                        <X className="h-4 w-4 text-gray-600" />
+                    </button>
+                </div>
             </div>
 
             {/* Suggestion Pills */}

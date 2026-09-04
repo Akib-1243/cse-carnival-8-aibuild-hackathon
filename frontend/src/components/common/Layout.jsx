@@ -46,6 +46,20 @@ const navItems = [
 export default function Layout() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [isChatOpen, setIsChatOpen] = useState(false);
+    const [isChatMinimized, setIsChatMinimized] = useState(false);
+    const [assistantPrompt, setAssistantPrompt] = useState('');
+
+    const openAssistant = (prompt) => {
+        if (prompt) setAssistantPrompt(prompt);
+        setIsChatOpen(true);
+        setIsChatMinimized(false);
+    };
+
+    const closeAssistant = () => {
+        setIsChatOpen(false);
+        setIsChatMinimized(false);
+        setAssistantPrompt('');
+    };
 
     return (
         <div className="flex h-screen bg-[#f8fafc]">
@@ -134,12 +148,12 @@ export default function Layout() {
 
             {/* Main Content */}
             <main className="flex-1 overflow-y-auto p-6">
-                <Outlet />
+                <Outlet context={{ openAssistant }} />
             </main>
 
             {/* AI Chat Button */}
             <button
-                onClick={() => setIsChatOpen(true)}
+                onClick={() => openAssistant()}
                 className="fixed bottom-6 right-6 gradient-btn text-white p-4 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 z-10"
                 aria-label="Open AI assistant"
             >
@@ -148,7 +162,13 @@ export default function Layout() {
 
             {/* Chat Panel */}
             {isChatOpen && (
-                <ChatPanel onClose={() => setIsChatOpen(false)} />
+                <ChatPanel
+                    key={assistantPrompt}
+                    onClose={closeAssistant}
+                    onMinimize={() => setIsChatMinimized(true)}
+                    isMinimized={isChatMinimized}
+                    initialPrompt={assistantPrompt}
+                />
             )}
         </div>
     );
