@@ -12,6 +12,8 @@ Your job: build **CampusOS** — a two-part app with a data dashboard and an AI 
 
 Read the full problem statement → [`PROBLEM_STATEMENT.md`](./PROBLEM_STATEMENT.md)
 
+Team implementation guide → [`workflow/README.md`](./workflow/README.md)
+
 ---
 
 ## Repository Structure
