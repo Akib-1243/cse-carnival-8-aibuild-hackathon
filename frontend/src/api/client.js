@@ -10,6 +10,12 @@ const api = axios.create({
     timeout: 3000,
 });
 
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem('campusos_admin_token');
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+});
+
 // Seed data storage helpers for offline / standalone resilience
 const SEED_DATA = {
     schedules: [
@@ -68,128 +74,56 @@ export const getRecords = async (endpoint) => {
 };
 
 export const addRecord = async (endpoint, data) => {
-    try {
-        const res = await api.post(`/${endpoint}`, data);
-        return res.data;
-    } catch {
-        const items = getLocal(endpoint);
-        const newItem = { id: `${endpoint.slice(0, 3)}-${Date.now()}`, ...data };
-        const updated = [newItem, ...items];
-        setLocal(endpoint, updated);
-        return newItem;
-    }
+    const res = await api.post(`/${endpoint}`, data);
+    return res.data;
 };
 
 export const updateRecord = async (endpoint, id, data) => {
-    try {
-        const res = await api.put(`/${endpoint}/${id}`, data);
-        return res.data;
-    } catch {
-        const items = getLocal(endpoint);
-        const updated = items.map((item) => (item.id === id ? { ...item, ...data } : item));
-        setLocal(endpoint, updated);
-        return { id, ...data };
-    }
+    const res = await api.put(`/${endpoint}/${id}`, data);
+    return res.data;
 };
 
 export const deleteRecord = async (endpoint, id) => {
+    const res = await api.delete(`/${endpoint}/${id}`);
+    return res.data;
+};
+
+export const adminLogin = async (adminId, password) => {
+    const res = await api.post('/auth/admin/login', { adminId, password });
+    localStorage.setItem('campusos_admin_token', res.data.token);
+    return res.data;
+};
+
+export const adminLogout = async () => {
     try {
-        const res = await api.delete(`/${endpoint}/${id}`);
-        return res.data;
-    } catch {
-        const items = getLocal(endpoint);
-        const updated = items.filter((item) => item.id !== id);
-        setLocal(endpoint, updated);
-        return { success: true };
+        await api.post('/auth/admin/logout');
+    } finally {
+        localStorage.removeItem('campusos_admin_token');
     }
 };
+
+export const isAdmin = () => Boolean(localStorage.getItem('campusos_admin_token'));
 
 // --- Room specific actions ---
 export const bookRoom = async (roomId, bookingData) => {
-    try {
-        const res = await api.post(`/rooms/${roomId}/book`, bookingData);
-        return res.data;
-    } catch {
-        const rooms = getLocal('rooms');
-        const newBooking = { booking_id: `bk-${Date.now()}`, ...bookingData };
-        const updated = rooms.map((r) => {
-            if (r.id === roomId) {
-                return { ...r, bookings: [...(r.bookings || []), newBooking] };
-            }
-            return r;
-        });
-        setLocal('rooms', updated);
-        return newBooking;
-    }
+    const res = await api.post(`/rooms/${roomId}/book`, bookingData);
+    return res.data;
 };
 
 export const cancelRoomBooking = async (roomId, bookingId) => {
-    try {
-        const res = await api.delete(`/rooms/${roomId}/book/${bookingId}`);
-        return res.data;
-    } catch {
-        const rooms = getLocal('rooms');
-        const updated = rooms.map((r) => {
-            if (r.id === roomId) {
-                return {
-                    ...r,
-                    bookings: (r.bookings || []).filter((b) => b.booking_id !== bookingId),
-                };
-            }
-            return r;
-        });
-        setLocal('rooms', updated);
-        return { success: true };
-    }
+    const res = await api.delete(`/rooms/${roomId}/book/${bookingId}`);
+    return res.data;
 };
 
 // --- Event specific actions ---
 export const registerForEvent = async (eventId, userData) => {
-    try {
-        const res = await api.post(`/events/${eventId}/register`, userData);
-        return res.data;
-    } catch {
-        const events = getLocal('events');
-        const newReg = {
-            student_id: userData.student_id || '20-40532',
-            name: userData.name || 'Student',
-        };
-        const updated = events.map((ev) => {
-            if (ev.id === eventId) {
-                const regs = ev.registrations || [];
-                return {
-                    ...ev,
-                    registered: (ev.registered || 0) + 1,
-                    registrations: [...regs, newReg],
-                };
-            }
-            return ev;
-        });
-        setLocal('events', updated);
-        return newReg;
-    }
+    const res = await api.post(`/events/${eventId}/register`, userData);
+    return res.data;
 };
 
 export const cancelEventRegistration = async (eventId, registrationId) => {
-    try {
-        const res = await api.delete(`/events/${eventId}/register/${registrationId}`);
-        return res.data;
-    } catch {
-        const events = getLocal('events');
-        const updated = events.map((ev) => {
-            if (ev.id === eventId) {
-                const regs = (ev.registrations || []).filter((r) => r.student_id !== registrationId);
-                return {
-                    ...ev,
-                    registered: Math.max(0, (ev.registered || 1) - 1),
-                    registrations: regs,
-                };
-            }
-            return ev;
-        });
-        setLocal('events', updated);
-        return { success: true };
-    }
+    const res = await api.delete(`/events/${eventId}/register/${registrationId}`);
+    return res.data;
 };
 
 // --- Agent chat with smart campus responder ---

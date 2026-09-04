@@ -80,6 +80,7 @@ export default function Layout() {
         '/events': 'Campus events',
         '/announcements': 'Announcements',
         '/assignments': 'Assignments',
+        '/admin': 'Administration',
     };
     const pageTitle = pageTitles[location.pathname] || 'CampusOS';
     const isHome = location.pathname === '/';

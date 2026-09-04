@@ -8,6 +8,7 @@ import RoomsPage from './features/rooms/RoomsPage';
 import EventsPage from './features/events/EventsPage';
 import AnnouncementsPage from './features/announcements/AnnouncementsPage';
 import AssignmentsPage from './features/assignments/AssignmentsPage';
+import AdminPage from './features/admin/AdminPage';
 import {
   Calendar,
   DoorOpen,
@@ -255,6 +256,7 @@ export default function App() {
         <Route path="events" element={<EventsPage />} />
         <Route path="announcements" element={<AnnouncementsPage />} />
         <Route path="assignments" element={<AssignmentsPage />} />
+        <Route path="admin" element={<AdminPage />} />
       </Route>
     </Routes>
   );
