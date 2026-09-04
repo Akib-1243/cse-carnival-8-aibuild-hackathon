@@ -35,7 +35,7 @@ cse-carnival-8-aibuild-hackathon/
 |   |-- AI_BUILD_PROMPT.md
 |   `-- ACCEPTANCE_TESTS.md
 |
-|-- server/                           # Persistent API and domain rules
+|-- backend/                          # Persistent API and domain rules
 |   |-- index.js                      # Start the API server
 |   |-- package.json                   # Backend scripts and dependencies
 |   |-- db/

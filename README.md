@@ -19,7 +19,7 @@ Team implementation guide → [`workflow/README.md`](./workflow/README.md)
 Start the backend in one terminal:
 
 ```bash
-cd server
+cd backend
 npm install
 npm run dev
 ```
@@ -33,7 +33,7 @@ npm run dev
 ```
 
 The API runs at `http://localhost:5000` and the frontend at `http://localhost:5173`.
-The backend creates `server/campusos.sqlite` and imports the seed files on first startup.
+The backend creates `backend/campusos.sqlite` and imports the seed files on first startup.
 
 ---
 
