@@ -42,9 +42,7 @@ Copy `.env.example` to `.env`. Optional backend settings go in `backend/.env`.
 | `VITE_API_URL` | Frontend | Backend API URL; defaults to `http://localhost:5000/api` |
 | `PORT` | No | Backend port; defaults to `5000` |
 | `DATABASE_PATH` | No | SQLite path; defaults to `backend/campusos.sqlite` |
-| `LLM_API_URL` | No | OpenAI-compatible chat API URL |
-| `LLM_API_KEY` | No | LLM provider key; never commit it |
-| `LLM_MODEL` | No | LLM model name |
+| `LLM_MODEL` | No | GROK |
 
 ## Using the Agent
 
@@ -55,14 +53,6 @@ Open the assistant in the dashboard and try:
 - `Show me high priority announcements.`
 - `Which labs have a projector and can fit at least 30 people?`
 - `Is Room 7A02 available tomorrow from 3 PM to 5 PM?`
-
-## Submission Checklist
-
-- [ ] Repository is public.
-- [ ] Backend and frontend start with the commands above.
-- [ ] All five dashboard sections are visible.
-- [ ] Add, edit, and delete changes persist after reload.
-- [ ] No API keys or secrets are committed.
 
 ## References
 
