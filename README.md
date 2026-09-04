@@ -1,22 +1,20 @@
-# CampusOS — AI Build Hackathon
+# CampusOS
 
-An intelligent university platform powered by an AI agent that understands and acts on real-time campus data.
+CampusOS is a React dashboard and AI assistant for managing live campus schedules, rooms, events, announcements, and assignments. Data is stored persistently in SQLite and shared by the dashboard and backend API.
 
----
+## Tech Stack
 
-## The Challenge
+- Frontend: React, Vite, React Router, TanStack Query, Tailwind CSS
+- Backend: Node.js, Express, CORS
+- Database: SQLite
+- AI: OpenAI-compatible chat API, configurable for Groq or another provider
+- Languages: JavaScript and JSX
 
-Students struggle daily with scattered campus information — class changes buried in group chats, deadlines forgotten until the last minute, no easy way to know what's happening on campus right now.
+## Setup
 
-Your job: build **CampusOS** — a two-part app with a data dashboard and an AI agent that always reads live data.
+Requirements: Node.js 18+ and npm.
 
-Read the full problem statement → [`PROBLEM_STATEMENT.md`](./PROBLEM_STATEMENT.md)
-
-Team implementation guide → [`workflow/README.md`](./workflow/README.md)
-
-## Run the Application
-
-Start the backend in one terminal:
+Backend, in terminal 1:
 
 ```bash
 cd backend
@@ -24,7 +22,7 @@ npm install
 npm run dev
 ```
 
-Start the frontend in a second terminal:
+Frontend, in terminal 2:
 
 ```bash
 cd frontend
@@ -32,94 +30,33 @@ npm install
 npm run dev
 ```
 
-The API runs at `http://localhost:5000` and the frontend at `http://localhost:5173`.
-The backend creates `backend/campusos.sqlite` and imports the seed files on first startup.
+Open `http://localhost:5173`. The API runs at `http://localhost:5000`.
+The backend imports seed data into `backend/campusos.sqlite` on first startup.
 
----
+## Environment Variables
 
-## Repository Structure
+Copy `.env.example` to `.env`. Optional backend settings go in `backend/.env`.
 
-```
-campusos-hackathon/
-│
-├── README.md                    ← You are here
-├── PROBLEM_STATEMENT.md         ← Full problem statement + scoring
-├── SUBMISSION.md                ← How and where to submit
-│
-├── data/                        ← Seed data (load these into your backend)
-│   ├── schedules.json
-│   ├── rooms.json
-│   ├── events.json
-│   ├── announcements.json
-│   └── assignments.json
-│
-├── schema/
-│   └── schema.md                ← Field names, types, and constraints for all 5 systems
-│
-└── sample_queries/
-    └── sample_queries.md        ← Queries we will use when judging your agent
-```
+| Variable | Required | Purpose |
+|---|---|---|
+| `VITE_API_URL` | Frontend | Backend API URL; defaults to `http://localhost:5000/api` |
+| `PORT` | No | Backend port; defaults to `5000` |
+| `DATABASE_PATH` | No | SQLite path; defaults to `backend/campusos.sqlite` |
+| `LLM_MODEL` | No | GROK |
 
----
+## Using the Agent
 
-## How to Participate
+Open the assistant in the dashboard and try:
 
-### 1. Fork the repository
+- `When is my next class?`
+- `What assignments do I have due this week?`
+- `Show me high priority announcements.`
+- `Which labs have a projector and can fit at least 30 people?`
+- `Is Room 7A02 available tomorrow from 3 PM to 5 PM?`
 
-Click **Fork** in the top-right corner of this repo's GitHub page. This creates your own copy under your GitHub account, where you'll build your solution.
+## References
 
-### 2. Clone your fork
-
-```bash
-git clone https://github.com/YOUR_USERNAME/campusos-hackathon.git
-cd campusos-hackathon
-```
-
-### 3. Build your solution inside your fork
-
-> Your solution lives in your fork — do not open a pull request to this repo.
-
-### 4. Making your fork private
-
-By default, a fork is public. If you want to keep your work hidden from other participants while you build:
-
-1. Go to your fork on GitHub
-2. Open **Settings** (top of the repo page)
-3. Scroll to the **Danger Zone** at the bottom
-4. Click **Change repository visibility** → **Make private**
-5. Confirm by typing the repository name
-
-> **You may keep your fork private during the hackathon period, but it must be switched back to public by 8:30 PM on the submission deadline.** Repositories still private after that time will not be judged. To make it public again, repeat the steps above and choose **Make public** instead.
-
-### 5. Submit
-
-Submit your fork's public URL via the instructions in [`SUBMISSION.md`](./SUBMISSION.md).
-
----
-
-## Quick Links
-
-| Resource | Link |
-|----------|------|
-| Full problem statement | [`PROBLEM_STATEMENT.md`](./PROBLEM_STATEMENT.md) |
-| Data schema | [`schema/schema.md`](./schema/schema.md) |
-| Sample agent queries | [`sample_queries/sample_queries.md`](./sample_queries/sample_queries.md) |
-| Submission guide | [`SUBMISSION.md`](./SUBMISSION.md) |
-
----
-
-## Seed Data Overview
-
-| File | Records | What It Contains |
-|------|---------|-----------------|
-| `schedules.json` | 24 | Class timetable — course, day, time, room, instructor |
-| `rooms.json` | 20 | Rooms 7A01–7A07, 7B01–7B08, 7C01–7C05 with equipment and bookings |
-| `events.json` | 7 | Campus events with registration lists |
-| `announcements.json` | 8 | Notices with priority levels and expiry dates |
-| `assignments.json` | 8 | Course assignments with deadlines and submission status |
-
-> **Important:** These JSON files are only the starting/seed data — not the database itself. Load them into a real backend (a database, or at minimum a backend service with persistent storage) on app startup. Your dashboard and AI agent must both read from and write to that backend, not the static JSON files directly. If you add, edit, or delete a record, the change must be saved in your backend and still be there after a reload — the JSON files in this repo will not update. The agent is also expected to always query the current backend state, not a cached or hardcoded copy of the seed data.
-
----
-
-Good luck. Build something that actually works.
+- [Problem statement](PROBLEM_STATEMENT.md)
+- [Schema](schema/schema.md)
+- [Sample queries](sample_queries/sample_queries.md)
+- [Submission rules](SUBMISSION.md)
