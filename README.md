@@ -14,6 +14,27 @@ Read the full problem statement → [`PROBLEM_STATEMENT.md`](./PROBLEM_STATEMENT
 
 Team implementation guide → [`workflow/README.md`](./workflow/README.md)
 
+## Run the Application
+
+Start the backend in one terminal:
+
+```bash
+cd server
+npm install
+npm run dev
+```
+
+Start the frontend in a second terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The API runs at `http://localhost:5000` and the frontend at `http://localhost:5173`.
+The backend creates `server/campusos.sqlite` and imports the seed files on first startup.
+
 ---
 
 ## Repository Structure

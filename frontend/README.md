@@ -28,10 +28,10 @@ As **Member 3**, all core responsibilities have been built and verified:
 - Node.js (v18 or higher)
 - npm
 
-### 1. Start Frontend Client
+### 1. Start Frontend
 ```bash
-# Navigate to client directory
-cd client
+# Navigate to frontend directory
+cd frontend
 
 # Install dependencies (if not already installed)
 npm install

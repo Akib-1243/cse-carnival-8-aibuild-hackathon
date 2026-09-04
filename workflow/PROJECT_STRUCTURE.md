@@ -36,8 +36,8 @@ cse-carnival-8-aibuild-hackathon/
 |   `-- ACCEPTANCE_TESTS.md
 |
 |-- server/                           # Persistent API and domain rules
-|   |-- index.ts                      # Start the API server
-|   |-- config.ts                      # Environment configuration
+|   |-- index.js                      # Start the API server
+|   |-- package.json                   # Backend scripts and dependencies
 |   |-- db/
 |   |   |-- client.ts                 # Database connection
 |   |   |-- seed.ts                   # Import data once
@@ -69,10 +69,10 @@ cse-carnival-8-aibuild-hackathon/
 |   |   `-- assignment-tools.ts
 |   `-- tool-registry.ts               # Exposes tools to the LLM
 |
-|-- client/                           # Dashboard and chat UI
-|   |-- main.tsx
-|   |-- App.tsx
-|   |-- api/client.ts                  # Calls server API only
+|-- frontend/                         # Dashboard and chat UI
+|   |-- src/main.jsx
+|   |-- src/App.jsx
+|   |-- src/api/client.js              # Calls server API only
 |   |-- components/
 |   |   |-- Layout.tsx
 |   |   |-- ChatPanel.tsx
@@ -88,7 +88,7 @@ cse-carnival-8-aibuild-hackathon/
 |   |   `-- assignments/
 |   |-- styles/
 |   |   `-- app.css
-|   `-- types.ts
+|   `-- src/index.css
 |
 |-- tests/
 |   |-- api/                          # CRUD and domain-rule tests
