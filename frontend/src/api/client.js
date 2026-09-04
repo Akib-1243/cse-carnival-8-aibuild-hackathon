@@ -193,9 +193,9 @@ export const cancelEventRegistration = async (eventId, registrationId) => {
 };
 
 // --- Agent chat with smart campus responder ---
-export const sendChatMessage = async (message) => {
+export const sendChatMessage = async (message, history = []) => {
     try {
-        return await api.post('/agent/chat', { message });
+        return await api.post('/agent/chat', { message, history });
     } catch {
         const lower = message.toLowerCase();
         const announcements = getLocal('announcements');

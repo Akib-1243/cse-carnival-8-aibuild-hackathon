@@ -31,7 +31,7 @@ export default function ChatPanel({ onClose }) {
         setIsLoading(true);
 
         try {
-            const response = await sendChatMessage(query);
+            const response = await sendChatMessage(query, messages.slice(-10));
             const agentMsg = {
                 role: 'assistant',
                 content: response.data.reply || response.data.message || 'Updated!',
